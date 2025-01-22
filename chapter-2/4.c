@@ -13,9 +13,11 @@ DefCell(int, CELL, LIST);
 
 typedef int BOOLEAN;
 
+BOOLEAN lexless(LIST A, LIST B);
+char normalizecase(char c);
+
 main()
 {
-    
 }
 
 BOOLEAN lexless(LIST A, LIST B)
@@ -24,9 +26,9 @@ BOOLEAN lexless(LIST A, LIST B)
 	return TRUE;
     else if (B == NULL) /* B is a proper prefix of A or A and B are the empty string and are equal */
 	return FALSE; /* hence A is not less than B */
-    else if (A->element < B->element)
+    else if (normalizecase(A->element) < normalizecase(B->element))
 	return TRUE;
-    else if (B->element < A->element)
+    else if (normalizecase(B->element) < normalizecase(A->element))
 	return FALSE;
     else /* the elements of A so far form a proper prefix of B */
 	return lexless(A->next, B->next);
@@ -34,6 +36,10 @@ BOOLEAN lexless(LIST A, LIST B)
 
 char normalizecase(char c)
 {
+    int difference;
+    difference = 'a' - 'A';
     if (c >= 'A' && c <= 'Z')
-	
+	return c + difference;
+    else
+	return c;
 }
